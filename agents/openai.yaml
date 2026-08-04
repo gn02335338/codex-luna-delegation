@@ -1,0 +1,6 @@
+interface:
+  display_name: "Codex Luna Delegation"
+  short_description: "Configure Sol planning with a bounded Luna subagent"
+  default_prompt: "Set up and validate the Luna custom Codex subagent, preserve unrelated configuration, show the diff, and explain the credit/speed tradeoff."
+policy:
+  allow_implicit_invocation: true
