@@ -1,66 +1,225 @@
 ---
 name: codex-luna-delegation
-description: "Configure, update, validate, or troubleshoot a Codex Sol-coordinator/Luna-subagent workflow. Use when the user asks to create or repair ~/.codex/agents/luna-max-fast.toml, use gpt-5.6-luna for bounded delegated work, preserve existing Codex configuration, add a persistent AGENTS.md routing policy, show a diff, verify the installed Codex version, or mentions Sol 統籌, Luna 子代理, luna-max-fast, Codex 省額度, Max, or Fast mode. Also use to orchestrate a task with Sol planning and Luna executing narrow independent units. Do not use for generic model selection or unrelated coding tasks."
+description: "Configure, validate, or operate a Codex Sol-coordinator/Luna-subagent workflow. Use for gpt-5.6-luna custom-agent TOML, bounded delegation contracts, context-isolated worker tasks, AGENTS.md routing, profile and credit tradeoffs, dry-run diffs, runtime discovery, or troubleshooting luna-max-fast/luna-economy. Do not use for generic multi-agent architecture, broad context-engineering theory, or unrelated coding tasks."
 ---
 
 # Codex Luna Delegation
 
-Use a strong primary agent as coordinator and a narrow GPT-5.6 Luna custom agent as executor. Keep the overall goal, decomposition, integration, and final validation in the primary thread. Move only clear, independent work into the subagent.
+Use a strong primary agent as coordinator and a narrow GPT-5.6 Luna custom agent as executor. Treat subagents primarily as **context-isolation and bounded-execution tools**, not as role-play or an automatic speedup. Keep the overall goal, architecture, planning, integration, permissions, and final acceptance in the primary thread.
+
+## Scope and related skills
+
+This Skill owns the Codex-specific implementation layer:
+
+- Create and maintain a Luna custom-agent TOML file.
+- Install a persistent Sol/Luna routing block without damaging unrelated configuration.
+- Select `exact`, `economy`, or `fast-balanced` profiles.
+- Decide whether a concrete unit is safe and worthwhile to delegate.
+- Produce a complete delegation contract.
+- Validate static configuration and optional runtime discovery.
+
+Keep broader concerns separate:
+
+- Use `multi-agent-patterns` to choose supervisor, swarm, or hierarchical topology.
+- Use `context-optimization` for system-wide masking, compaction, caching, and token-budget policy.
+- Use `long-horizon-prompting` for the root brief of an autonomous, open-ended run.
+- Use `harness-engineering` for locked evaluators, durable ledgers, rollback, and approval governance.
+
+When those skills are installed, use them for upstream design and this Skill for the Codex/Luna execution layer. Do not copy their full content into this Skill. See [references/context-engineering-integration.md](references/context-engineering-integration.md).
 
 ## Distinguish the three mechanisms
 
 Do not confuse these files:
 
-- **Skill:** this folder and its `SKILL.md`; installs or applies the workflow.
-- **Custom agent:** `~/.codex/agents/<name>.toml` or `.codex/agents/<name>.toml`; defines the spawned subagent.
-- **Persistent routing policy:** `~/.codex/AGENTS.md` or a project `AGENTS.md`; tells future primary sessions when to delegate.
+- **Skill:** this folder and its `SKILL.md`; defines the reusable workflow.
+- **Custom agent:** `~/.codex/agents/<name>.toml` or `.codex/agents/<name>.toml`; defines the spawned Luna session.
+- **Persistent routing policy:** `~/.codex/AGENTS.md` or project `AGENTS.md`; tells future primary sessions when and how to delegate.
 
-A Skill does not become the custom agent. Use this Skill to create and maintain the separate TOML agent definition and, when requested, the routing policy.
+A Skill does not become the custom agent. Use this Skill to create and maintain the separate TOML definition and, when requested, the routing policy.
 
 ## Select the operating mode
 
-1. **Setup or maintenance request**
+1. **Setup or maintenance**
    - Create, update, inspect, validate, or troubleshoot the custom agent.
-   - Follow the setup workflow below.
+   - Follow the setup workflow.
 
-2. **Active Sol/Luna task request**
+2. **Active Sol/Luna task**
    - Keep planning and integration in the primary thread.
-   - Verify the custom agent exists before delegation.
-   - Delegate only units that satisfy every boundary rule below.
-   - Wait for results, inspect them, and perform final validation in the primary thread.
+   - Pass the delegation decision gate.
+   - Give Luna a complete bounded contract.
+   - Inspect the returned artifact and evidence before accepting it.
 
-3. **Usage or credit optimization request**
+3. **Contract generation**
+   - Produce a copyable delegation brief without changing configuration.
+   - Use the script's `contract` command or the template in this Skill.
+
+4. **Usage or credit optimization**
    - Explain the profile tradeoff before choosing silently.
    - Use `economy` when lower usage is the actual priority.
    - Use `exact` only when the user explicitly wants Luna + Max + Fast.
+   - Evaluate total coordinator + worker + verification usage, not Luna's model rate alone.
 
 ## Profile choices
 
-Use one of these profiles:
-
 | Profile | Model | Reasoning | Service tier | Purpose |
 |---|---|---|---|---|
-| `exact` | `gpt-5.6-luna` | `max` | `fast` | Match the quoted “Luna Max Fast” setup exactly. Quality/speed first. |
-| `economy` | `gpt-5.6-luna` | `medium` | standard/default | Prefer for genuinely usage-conscious bounded work. |
+| `exact` | `gpt-5.6-luna` | `max` | `fast` | Match “Luna Max Fast” exactly. Quality/speed first. |
+| `economy` | `gpt-5.6-luna` | `medium` | standard/default | Prefer for usage-conscious bounded work. |
 | `fast-balanced` | `gpt-5.6-luna` | `medium` | `fast` | Prefer when speed matters but routine work does not need maximum reasoning. |
 
-Do not describe `exact` as the cheapest setup. Maximum reasoning can use more reasoning tokens, and Fast mode consumes more credits or higher-priority API pricing. Luna itself is cost-oriented, but `max` and `fast` partially offset that benefit.
+Do not describe `exact` as the cheapest setup. Higher reasoning effort increases token use, and GPT-5.6 Fast mode consumes ChatGPT credits at 2.5 times the Standard rate. Luna is cost-oriented, but `max` and `fast` offset part of that advantage. API-key sessions use API pricing rather than ChatGPT credit multipliers.
+
+## Delegation decision gate
+
+Delegate only when a separate worker context creates a material benefit that exceeds coordination overhead. A unit must satisfy **all** of these conditions:
+
+1. It has one clear objective.
+2. The source-of-truth inputs are explicit and current.
+3. A success predicate defines what must be true at completion.
+4. Non-counting outcomes identify plausible near misses that must not be reported as complete.
+5. Editable, locked, append-only, and human-controlled surfaces are explicit.
+6. Required output and acceptance evidence are defined.
+7. The unit can finish without changing the overall goal or architecture.
+8. It does not require product, security, permission, deployment, merge, or destructive-action decisions.
+9. Its writes do not overlap with another active agent.
+10. The primary thread can independently inspect or validate the result.
+11. Context isolation, parallelism, or specialization is worth the extra model/tool work.
+
+Do not delegate when:
+
+- The primary agent can complete the task directly with less overhead.
+- The request is ambiguous or still needs scope discovery.
+- The work is highly coupled across many files or systems.
+- The worker would need to change the evaluator, rubric, or acceptance bar to pass.
+- No independent evidence can establish completion.
+- The only benefit is “an agent is available.”
+
+Good candidates include targeted file edits, focused tests, read-heavy exploration, extraction, log analysis, isolated reviews, or a well-defined implementation slice. Keep architecture, cross-cutting integration, security decisions, deploy/merge approval, and final acceptance in the primary thread.
+
+## Context transfer policy
+
+Use the smallest high-signal context that preserves correctness:
+
+1. **Instruction passing is the default.** Send a compact contract containing only the objective, source-of-truth inputs, constraints, surfaces, output, and checks.
+2. **Use files for bulky or durable state.** Point Luna to exact paths for specifications, logs, test output, or intermediate artifacts instead of pasting them into the delegation message.
+3. **Use full-context delegation only as an exception.** State why the unit cannot be completed safely from a compact contract, and still exclude unrelated history.
+4. **Do not dump the parent conversation.** Remove brainstorming, superseded decisions, duplicate tool output, and unrelated stack traces.
+5. **Preserve exact facts.** Keep filenames, symbols, versions, commands, expected values, and user constraints verbatim when they are load-bearing.
+6. **Mark source and freshness.** Identify which file, branch, issue, or command output is authoritative and whether it may be stale.
+7. **Do not duplicate secrets.** Reference approved credential mechanisms; never copy credentials into a worker prompt or artifact.
+
+## Surface classification
+
+Every write-capable delegation must classify its surfaces:
+
+| Surface | Meaning | Luna rule |
+|---|---|---|
+| **Editable** | Files or data explicitly in scope | May change only these surfaces. |
+| **Locked/read-only** | Tests, evaluators, rubrics, policies, or reference files used to judge the work | May inspect but must not change them to make the task pass. |
+| **Append-only** | Logs, result ledgers, research notes | May append; must not rewrite or erase prior history. |
+| **Human-controlled** | Merge, deploy, credentials, production state, destructive actions | May prepare evidence or a proposal; must not execute the action. |
+
+If a surface is not classified, treat it as out of scope.
+
+## Delegation contract
+
+Generate a complete template with:
+
+```bash
+python <skill-dir>/scripts/configure_luna_agent.py contract \
+  --profile economy
+```
+
+Use the resulting structure:
+
+```text
+Use the custom agent <agent-name>.
+
+Objective:
+<one bounded objective>
+
+Why delegation is justified:
+<context isolation, parallelism, or specialization benefit>
+
+Source-of-truth inputs:
+<exact files, refs, commands, data, versions, and freshness>
+
+Success predicate:
+<conditions that must all be true>
+
+Does not count:
+<near misses, partial artifacts, narrowed scope, or unsupported claims>
+
+Surfaces:
+- Editable: <explicit paths/systems>
+- Locked/read-only: <evaluators, tests, policies, references>
+- Append-only: <logs or ledgers>
+- Human-controlled: <merge, deploy, credentials, destructive actions>
+
+Allowed tools and context:
+<tools, network policy, and exact context references>
+
+Required output:
+<patch, artifact, findings, or structured response>
+
+Acceptance evidence:
+<tests, commands, diffs, logs, or citations>
+
+Return condition:
+Return COMPLETE only when the success predicate is satisfied and evidence is attached.
+Return BLOCKED when a required input is missing or the task cannot be completed inside scope.
+
+Stop conditions:
+<contradiction, scope expansion, unsafe action, overlapping write, or invalid source>
+```
+
+Do not weaken the contract merely to avoid a `BLOCKED` result. A truthful blocker is better than an answer-shaped near miss.
+
+## Long-horizon and parallel work
+
+For an open-ended or multi-worker run:
+
+- Keep the root success predicate, approach selection, progress ledger, integration, and final audit with Sol.
+- Delegate bounded slices, not the entire ambiguous problem, unless a separate long-horizon Skill and harness define the root run.
+- Store shared state in durable files when multiple workers need exact access; avoid repeated paraphrasing through the coordinator.
+- Preserve early independence between exploratory workers and prevent duplicate approaches.
+- Mark blocked routes and verified findings explicitly so later workers do not rediscover the same dead end.
+- Use fresh-context verification for critical results when practical; do not let the author silently approve its own evaluator changes.
+- Serialize overlapping writes or split ownership by non-overlapping files and interfaces.
+- Wait for all required workers before synthesis, but do not wait for optional work that no longer affects the predicate.
+
+## Orchestration workflow
+
+For an active task:
+
+1. Understand the whole request in the primary thread.
+2. Define the overall goal, architecture boundaries, and human-controlled actions.
+3. Identify zero or more independent units.
+4. Apply the delegation decision gate; keep small or coupled work in the primary thread.
+5. Build a complete contract for each accepted unit.
+6. Transfer only high-signal context and exact file references.
+7. Spawn `luna-max-fast`, `luna-economy`, `luna-fast`, or the explicitly configured agent.
+8. Prevent overlapping writes and track active ownership.
+9. Wait for required results and inspect the actual artifacts, not only summaries.
+10. Re-run or independently check the stated acceptance evidence.
+11. Resolve conflicts and perform integration tests in the primary thread.
+12. Deliver one integrated result; do not forward raw subagent chatter or unverified completion claims.
 
 ## Setup workflow
 
 ### 1. Inspect before writing
 
 - Run `codex --version` when available.
-- Resolve `CODEX_HOME`; default to `~/.codex` when it is unset.
+- Resolve `CODEX_HOME`; default to `~/.codex` when unset.
 - Inspect the target custom-agent file.
-- Inspect the active global or project instruction file. An existing non-empty `AGENTS.override.md` takes precedence over `AGENTS.md`.
+- Inspect the active global or project instruction file. A non-empty `AGENTS.override.md` takes precedence over `AGENTS.md`.
 - Never overwrite `~/.codex/config.toml`, other custom agents, or unrelated instruction content.
 
 ### 2. Preview the exact diff
 
 Resolve this Skill's directory from the loaded `SKILL.md` path. Run its script with an absolute path.
 
-For the quoted setup at user scope with persistent global routing:
+Quoted Luna Max Fast setup:
 
 ```bash
 python <skill-dir>/scripts/configure_luna_agent.py install \
@@ -70,7 +229,7 @@ python <skill-dir>/scripts/configure_luna_agent.py install \
   --dry-run
 ```
 
-For actual usage-first routing:
+Usage-first setup:
 
 ```bash
 python <skill-dir>/scripts/configure_luna_agent.py install \
@@ -80,9 +239,7 @@ python <skill-dir>/scripts/configure_luna_agent.py install \
   --dry-run
 ```
 
-On Windows PowerShell, use one line or PowerShell backticks rather than Bash backslashes.
-
-Review the unified diff. Confirm that only the dedicated agent file and the marked routing block will change.
+On Windows PowerShell, use one line or PowerShell backticks rather than Bash backslashes. Review the unified diff and confirm that only the dedicated agent file and marked routing block change.
 
 ### 3. Apply the configuration
 
@@ -95,7 +252,7 @@ The script must:
 - Update only the block between `codex-luna-delegation` markers in `AGENTS.md`.
 - Leave all other configuration and instructions unchanged.
 
-Use project scope when the workflow should apply only to one repository:
+Project-scoped example:
 
 ```bash
 python <skill-dir>/scripts/configure_luna_agent.py install \
@@ -107,8 +264,6 @@ python <skill-dir>/scripts/configure_luna_agent.py install \
 
 ### 4. Validate statically
 
-Run:
-
 ```bash
 python <skill-dir>/scripts/configure_luna_agent.py validate \
   --profile exact \
@@ -119,7 +274,8 @@ Require all of the following:
 
 - TOML parses successfully when a TOML parser is available.
 - `name`, `description`, and `developer_instructions` are present and non-empty.
-- The selected model, reasoning effort, and Fast-mode pairing match the requested profile.
+- Model, reasoning effort, service tier, and Fast-mode pairing match the selected profile.
+- Managed files contain the delegation contract and surface guardrails.
 - `codex --version` succeeds when Codex is installed on `PATH`.
 
 Do not claim runtime compatibility merely because TOML parsing passed.
@@ -137,7 +293,7 @@ python <skill-dir>/scripts/configure_luna_agent.py validate \
   --smoke-test
 ```
 
-State before running it that this starts a real Codex turn and may consume ChatGPT credits or API tokens. Treat the smoke test as evidence of discovery, not proof of exact billing or internal model routing.
+State before running it that this starts a real Codex turn and may consume ChatGPT credits or API tokens. Treat the smoke test as discovery evidence, not proof of exact billing or internal routing.
 
 ### 6. Report the result
 
@@ -153,90 +309,17 @@ Configuration result
 
 Validation
 - TOML/schema: PASS/FAIL
-- Required agent fields: PASS/FAIL
+- Delegation guardrails: PASS/FAIL
 - Runtime discovery: PASS / NOT RUN / FAIL
 
 Important tradeoff
-- <state whether the selected profile is usage-first or speed/quality-first>
+- <usage-first or speed/quality-first; include Fast-mode multiplier when relevant>
 
 Next use
-- <one concrete invocation example>
+- <one concrete contract or invocation example>
 ```
 
-Include the generated diff when the user asks for it or when changes were applied.
-
-## Delegation boundary rules
-
-Delegate to the Luna custom agent only when **all** of these are true:
-
-1. The unit has one clear objective.
-2. Inputs and required outputs are explicit.
-3. Allowed files, systems, or data are bounded.
-4. Acceptance checks are defined.
-5. The unit can complete without changing the overall goal.
-6. The unit does not require architecture, product, security, permission, or destructive-action decisions.
-7. Its writes do not overlap with another active agent.
-8. The primary thread can independently inspect or validate the result.
-
-Good candidates:
-
-- Modify one named function or a small listed set of files.
-- Add focused unit tests for a defined behavior.
-- Run a bounded test suite and summarize failures.
-- Extract defined fields from a known set of files.
-- Investigate one error path and return evidence.
-- Review one isolated module against explicit criteria.
-
-Keep in the primary thread:
-
-- Understanding an ambiguous request.
-- Choosing architecture or changing scope.
-- Coordinating changes across many coupled modules.
-- Deciding security, access, deployment, or destructive actions.
-- Integrating conflicting findings.
-- Performing final acceptance and communicating the result.
-
-## Delegation prompt template
-
-Give the subagent a complete, bounded contract:
-
-```text
-Use the custom agent <agent-name>.
-
-Objective:
-<one objective>
-
-Allowed scope:
-<files, directories, systems, or data it may touch>
-
-Do not:
-<explicit exclusions>
-
-Required output:
-<artifact, patch, findings, or structured response>
-
-Acceptance checks:
-<tests or evidence required>
-
-Return only the completed result, validation performed, and remaining risks.
-```
-
-Do not send the entire noisy parent conversation when a compact task contract is sufficient. Preserve only the context required to complete the unit.
-
-## Orchestration workflow
-
-For an active task:
-
-1. Analyze the whole request in the primary thread.
-2. Define the overall plan and non-negotiable constraints.
-3. Identify zero or more independent bounded units.
-4. Avoid delegation when the task is already small; a subagent adds separate model and tool work.
-5. Spawn `luna-max-fast`, `luna-economy`, or the explicitly configured agent for each suitable unit.
-6. Avoid parallel writes to the same files.
-7. Wait for all required results.
-8. Inspect diffs, evidence, and validation claims.
-9. Resolve conflicts and perform final tests in the primary thread.
-10. Deliver one integrated result; do not forward raw subagent chatter.
+Include the generated diff when changes were applied or requested.
 
 ## Compatibility and troubleshooting
 
@@ -248,4 +331,4 @@ Read [references/codex-agent-schema.md](references/codex-agent-schema.md) when:
 - The user is on Windows or WSL and the resolved home path is unclear.
 - Current official documentation may have changed.
 
-Use current official OpenAI documentation as the source of truth when network access is available. Report any docs/runtime mismatch instead of inventing a compatible format.
+Use current official OpenAI documentation as the source of truth. Report a docs/runtime mismatch instead of inventing a compatible format.
